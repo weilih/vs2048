@@ -1,0 +1,9 @@
+<%= current_user || link_to(:log_in, login_path) %>
+<%= link_to :log_out, logout_path, method: :delete if current_user %>
+<br>
+
+<% @users.online.each do |user| %>
+  <%= user.username %>
+  <%= user.status %>
+  <%= link_to :challenge, '#' %><br>
+<% end %>
