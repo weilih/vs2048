@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  get 'matches/show'
+
   root 'users#index'
   resources :users
+  resources :matches
 
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
