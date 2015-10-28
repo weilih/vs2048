@@ -26,7 +26,7 @@ class MatchesController < ApplicationController
   end
 
   def refresh
-    if @match.whos_turn == current_user.id
+    if @match.whos_turn == current_user.id || @match.winner
       respond_to :js
     else
       render nothing: true

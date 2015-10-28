@@ -7,7 +7,7 @@
   <%= render partial: 'matches/board', locals: {board: @match.state} %>
 <% end %>
 
-<%= content_tag(:h1, "#{@match.winner} won the game!") if @match.winner %>
+<h1></h1>
 
 <% if @match.whos_turn == current_user.id  %>
   <button type="button" name="click" id='click'>click</button>

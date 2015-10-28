@@ -32,7 +32,8 @@ class Match < ActiveRecord::Base
     if @game_engine.has_2048?
       update(winner: whos_turn)
     elsif @game_engine.is_over?
-      update(winner: 0)
+      self.state = @game_engine.board
+      update(winner: 0, state: @game_engine.board)
     else
       increment!(:moves) if @game_engine.valid
     end
