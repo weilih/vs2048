@@ -1,8 +1,13 @@
 <meta http-equiv="refresh" content="5" />
 
 <%= div_for(@match) do %>
-  <%= @match.state %>
+  <!-- <% @match.state.each do |row| %>
+    <%= row %><br>
+  <% end %> -->
+  <%= render partial: 'matches/board', locals: {board: @match.state} %>
 <% end %>
+
+<%= content_tag(:h1, "#{@match.winner} won the game!") if @match.winner %>
 
 <% if @match.whos_turn == current_user.id  %>
   <button type="button" name="click" id='click'>click</button>
