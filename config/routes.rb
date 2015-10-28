@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   root 'users#index'
   resources :users
-  resources :matches
+  resources :matches do
+    get 'refresh', on: :member
+  end
 
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'

@@ -1,4 +1,4 @@
-<meta http-equiv="refresh" content="5" />
+<!-- <meta http-equiv="refresh" content="5" /> -->
 
 <%= div_for(@match) do %>
   <!-- <% @match.state.each do |row| %>
@@ -30,6 +30,15 @@
   //       window.location.reload(1);
   //   }, 3000);
   // })
+
+  $(document).on('ready page:load', function(){
+    setInterval(function(){
+      $.ajax({
+        url: location.pathname + '/refresh',
+        type: 'GET'
+      })
+    }, 3000)
+  })
 
   $(document).keyup(function(e){
     // if(e.keyCode == 37)

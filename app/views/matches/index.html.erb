@@ -1,0 +1,18 @@
+<meta http-equiv="refresh" content="10" />
+<%= render partial: 'sessions/links' %><br>
+
+<% @users.online.each do |user| %>
+  <%= user.username %>
+  <%= user.status %>
+  <%= link_to :challenge, new_match_path(user: user.id) %><br>
+<% end %>
+
+<script type="text/javascript">
+  $(document).on('ready page:load', function(){
+    new_match = <%= current_user.new_invite? %>;
+
+    if( Number.isInteger(new_match) ){
+      window.location.replace(location.pathname + "/" + new_match);
+    }
+  })
+</script>

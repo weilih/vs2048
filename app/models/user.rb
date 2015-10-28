@@ -7,4 +7,16 @@ class User < ActiveRecord::Base
   def to_s
     username
   end
+
+  def new_invite?
+    if match = Match.find_by("moves = 0 AND ? = ANY(players)", id)
+      match.id
+    else
+      false
+    end
+  end
+
+  def self.exclude(user)
+    user.nil? ? User.all : User.where.not(id: user.id)
+  end
 end

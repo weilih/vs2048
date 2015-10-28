@@ -1,4 +1,8 @@
 class MatchesController < ApplicationController
+  def index
+    @users = User.exclude(current_user)
+  end
+
   def show
     @match = Match.find(params[:id])
   end
@@ -18,5 +22,11 @@ class MatchesController < ApplicationController
     else
       render nothing: true
     end
+  end
+
+  def refresh
+    @match = Match.find(params[:id])
+    @disable = @match.whos_turn == current_user.id
+    respond_to :js
   end
 end

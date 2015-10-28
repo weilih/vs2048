@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = User.except(current_user)
+    @users = User.exclude(current_user)
   end
 
   def new
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def create
     if @user = User.create(user_params)
       login @user
-      redirect_to users_path
+      redirect_to matches_path
     else
       render :new
     end
