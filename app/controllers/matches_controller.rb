@@ -1,10 +1,12 @@
 class MatchesController < ApplicationController
+  before_action :set_match, except: [:index, :new]
+  before_action :authenticate_players, except: [:index, :new]
+
   def index
     @users = User.exclude(current_user)
   end
 
   def show
-    @match = Match.find(params[:id])
   end
 
   def new
@@ -16,7 +18,6 @@ class MatchesController < ApplicationController
   end
 
   def update
-    @match = Match.find(params[:id])
     if @match.whos_turn == current_user.id && @match.action(params[:move])
       respond_to :js
     else
@@ -25,8 +26,26 @@ class MatchesController < ApplicationController
   end
 
   def refresh
+    if @match.whos_turn == current_user.id
+      respond_to :js
+    else
+      render nothing: true
+    end
+  end
+
+  private
+
+  def set_match
     @match = Match.find(params[:id])
-    @disable = @match.whos_turn == current_user.id
-    respond_to :js
+  end
+
+  def authenticate_players
+    redirect_to root_path and return unless current_user
+
+    if @match.players.include?(current_user.id)
+      return true
+    else
+      redirect_to matches_path and return
+    end
   end
 end

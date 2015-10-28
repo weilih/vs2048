@@ -1,7 +1,3 @@
 $('div.match').html("<%= j render partial: 'matches/board', locals: {board: @match.state} %>")
 
-<% if @disable %>
-  $('#click').removeAttr('disabled')
-<% else %>
-  $('#click').attr('disabled', 'disabled')
-<% end %>
+$('#click').removeAttr('disabled')
