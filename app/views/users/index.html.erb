@@ -6,5 +6,5 @@
 <% @users.online.each do |user| %>
   <%= user.username %>
   <%= user.status %>
-  <%= link_to :challenge, '#' %><br>
+  <%= link_to :challenge, new_match_path(user: user.id) %><br>
 <% end %>

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all.select(:username, :status)
+    @users = User.all
   end
 
   def new

@@ -1,0 +1,46 @@
+<meta http-equiv="refresh" content="5" />
+
+<%= div_for(@match) do %>
+  <%= @match.state %>
+<% end %>
+
+<% if @match.whos_turn == current_user.id  %>
+  <button type="button" name="click" id='click'>click</button>
+<% else  %>
+  <button type="button" name="click" id='click' disabled='disabled'>click</button>
+<% end %>
+
+<script type="text/javascript">
+  // $(document).on('click', '#click', function(event){
+  //   $.ajax({
+  //     url: location.pathname,
+  //     type: 'PATCH',
+  //     data: { 'user': '<%= current_user.id %>'}
+  //   })
+  // })
+
+  // $(document).on('ready page:load', function(){
+  //   setTimeout(function(){
+  //     if($('#click').attr('disabled') == 'disabled')
+  //       window.location.reload(1);
+  //   }, 3000);
+  // })
+
+  $(document).keyup(function(e){
+    // if(e.keyCode == 37)
+    //   $("span").text('left');
+    // else if(e.keyCode == 38)
+    //   $("span").text('up');
+    // else if(e.keyCode == 39)
+    //   $("span").text('right');
+    // else if(e.keyCode == 40)
+    //    $("span").text('down');
+
+    $.ajax({
+      url: location.pathname,
+      type: 'PATCH',
+      data: { 'move': e.keyCode }
+    })
+
+  });
+</script>
