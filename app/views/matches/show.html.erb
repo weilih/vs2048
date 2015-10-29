@@ -1,5 +1,5 @@
 <%= div_for(@match) do %>
-  <%= render partial: 'matches/board', locals: {board: @match.state} %>
+  <%= render partial: 'matches/board', locals: {board: @match} %>
 <% end %>
 
 <%= content_tag :h1, @info[:msg], id: 'info', 'data-action': @info[:action] %>

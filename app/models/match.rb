@@ -24,6 +24,12 @@ class Match < ActiveRecord::Base
     end
   end
 
+  def in_ascii
+    state.map do |row|
+      row.map { |chr| "____#{chr}"[-4..-1] }.join('|')
+    end
+  end
+
   private
 
   def prepare_game
