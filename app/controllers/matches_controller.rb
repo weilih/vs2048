@@ -74,6 +74,9 @@ class MatchesController < ApplicationController
   def match_info_updates!
     if @match.winner
       @info = game_over(@match.winner)
+    elsif !still_playing?(@match.players) && !@match.moves.zero?
+      @match.update(winner: 0)
+      @info = { action: 'leave', msg: 'Your opponent ran away...'}
     else
       @info = wait_next_move(@match.whos_turn)
     end
@@ -93,5 +96,11 @@ class MatchesController < ApplicationController
     else
       { action: 'refresh', msg: "Wait..."}
     end
+  end
+
+  def still_playing?(players = [])
+    User.where(id: players).pluck(:status).uniq == [User.statuses['playing']]
+  rescue
+    false
   end
 end

@@ -4,6 +4,8 @@
 
 <%= content_tag :h1, @info[:msg], id: 'info', 'data-action': @info[:action] %>
 
+<%= link_to :back, matches_path, {id: 'back', hidden:'hidden'} %>
+
 <script type="text/javascript">
   $(document).on('ready page:load', function(){
     setInterval(function(){

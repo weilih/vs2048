@@ -3,3 +3,7 @@ $('div.match')
 
 $('#info').html('<%= @info[:msg] %>')
           .attr('data-action', '<%= @info[:action]%>')
+
+<% if @match.winner || @info[:action] == 'leave' %>
+  $('a#back').removeAttr('hidden')
+<% end %>
