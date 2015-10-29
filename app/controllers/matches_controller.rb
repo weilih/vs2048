@@ -4,11 +4,13 @@ class MatchesController < ApplicationController
 
   def index
     redirect_to root_path and return unless current_user
+    current_user.online!
     @users = User.exclude(current_user)
     @new_matches = Match.new_game
   end
 
   def show
+    current_user.playing!
     match_info_updates!
   end
 
@@ -71,17 +73,25 @@ class MatchesController < ApplicationController
 
   def match_info_updates!
     if @match.winner
-      if @match.winner.zero?
-        @info = { action: 'refresh', msg: "Draw"}
-      else
-        @info = { action: 'refresh', msg: "#{User.find(@match.winner)} Wins!"}
-      end
+      @info = game_over(@match.winner)
     else
-      if @match.whos_turn == current_user
-        @info = { action: 'pause', msg: "Your turn"}
-      else
-        @info = { action: 'refresh', msg: "Wait..."}
-      end
+      @info = wait_next_move(@match.whos_turn)
+    end
+  end
+
+  def game_over(winner)
+    if winner.zero?
+      { action: 'refresh', msg: "Draw"}
+    else
+      { action: 'refresh', msg: "#{User.find(winner)} Wins!"}
+    end
+  end
+
+  def wait_next_move(player)
+    if player == current_user
+      { action: 'pause', msg: "Your turn"}
+    else
+      { action: 'refresh', msg: "Wait..."}
     end
   end
 end
