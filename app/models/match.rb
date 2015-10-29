@@ -5,7 +5,7 @@ class Match < ActiveRecord::Base
     User.find_by(id: players[moves % players.size])
   end
 
-  def action(action)
+  def action(direction)
     # update(state: state << action)
     # win_state = [[ nil,  nil,  nil,  nil],
     #              [ nil,  nil,  nil,  nil],
@@ -17,10 +17,10 @@ class Match < ActiveRecord::Base
     #               [4,2,4,2]]
 
     @game_engine = GameEngine.new(state)
-    stack_to(action) unless winner
+    stack_to(direction) unless winner
 
     if @game_engine.has_2048?
-      update(winner: whos_turn)
+      update(winner: whos_turn.id)
     elsif @game_engine.is_over?
       self.state = @game_engine.board
       update(winner: 0, state: @game_engine.board)
@@ -32,7 +32,11 @@ class Match < ActiveRecord::Base
   private
 
   def prepare_game
-    @game_engine = GameEngine.new
+    win_state = [[ nil,  nil,  nil,  nil],
+                 [ nil,  nil,  nil,  nil],
+                 [ nil,  nil,  nil,  nil],
+                 [ nil, 1024, 1024,  nil]]
+    @game_engine = GameEngine.new(win_state)
     self.state = @game_engine.board
   end
 
