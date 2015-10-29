@@ -1,8 +1,13 @@
 class Match < ActiveRecord::Base
+  enum status: ['new_game', 'game_ready', 'play_game', 'game_end']
   before_create :prepare_game
 
   def whos_turn
     User.find_by(id: players[moves % players.size])
+  end
+
+  def include?(user)
+    players.include?(user.id)
   end
 
   def action(direction)
@@ -20,10 +25,10 @@ class Match < ActiveRecord::Base
     stack_to(direction) unless winner
 
     if @game_engine.has_2048?
-      update(winner: whos_turn.id)
+      update(winner: whos_turn.id, status: 3)
     elsif @game_engine.is_over?
       self.state = @game_engine.board
-      update(winner: 0, state: @game_engine.board)
+      update(winner: 0, state: @game_engine.board, status: 3)
     else
       increment!(:moves) if @game_engine.valid
     end
@@ -47,6 +52,6 @@ class Match < ActiveRecord::Base
     when '40'
       self.state = @game_engine.stack_to_bottom
     end
-    update(state: state)
+    update(state: state, status: 2)
   end
 end

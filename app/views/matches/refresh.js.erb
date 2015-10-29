@@ -1,5 +1,8 @@
 $('div.match').html("<%= j render partial: 'matches/board', locals: {board: @match.state} %>")
 
-$('#click').removeAttr('disabled')
-
-$('.info').html('<%= @info %>').css('color', 'green')
+<% if @match.whos_turn == current_user %>
+  $('#click').removeAttr('disabled')
+  $('.info').html('<%= @info %>').css('color', 'green')
+<% else %>
+  $('.info').html('<%= @info %>').css('color', 'red')
+<% end %>

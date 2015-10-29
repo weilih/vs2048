@@ -35,7 +35,7 @@
     setInterval(function(){
       if($('#click[disabled=disabled]').length > 0)
         $.ajax({ url: location.pathname + '/refresh', type: 'GET' })
-    }, 1500)
+    }, 3000)
   })
 
   $(document).keyup(function(e){

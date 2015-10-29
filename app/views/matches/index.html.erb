@@ -1,10 +1,19 @@
 <meta http-equiv="refresh" content="10" />
 <%= render partial: 'sessions/links' %><br>
 
+<%= link_to :crete_new_room, new_match_path %><br>
+
 <% @users.online.each do |user| %>
   <%= user.username %>
   <%= user.status %>
   <%= link_to :challenge, new_match_path(user: user.id) %><br>
+<% end %>
+
+<% @new_matches.each do |match| %>
+  <%= match.id %>
+  <%= match.players %>
+  <%= link_to :join, join_match_path(match) unless match.include?(current_user) %>
+  <%= link_to :start, start_match_path(match) if match.players.size >= 2 && match.include?(current_user) %>
 <% end %>
 
 <script type="text/javascript">

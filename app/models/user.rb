@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   end
 
   def new_invite?
-    if match = Match.find_by("moves = 0 AND ? = ANY(players)", id)
+    if match = Match.find_by("status = ? AND ? = ANY(players)", 1, id)
       match.id
     else
       false

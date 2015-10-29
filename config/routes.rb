@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :users
   resources :matches do
     get 'refresh', on: :member
+    get 'join', on: :member
+    get 'start', on: :member
   end
 
   get 'login' => 'sessions#new'

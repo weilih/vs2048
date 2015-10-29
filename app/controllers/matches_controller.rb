@@ -1,9 +1,11 @@
 class MatchesController < ApplicationController
   before_action :set_match, except: [:index, :new]
-  before_action :authenticate_players, except: [:index, :new]
+  before_action :authenticate_players, except: [:index, :new, :join]
 
   def index
+    redirect_to root_path and return unless current_user
     @users = User.exclude(current_user)
+    @new_matches = Match.new_game
   end
 
   def show
@@ -11,12 +13,33 @@ class MatchesController < ApplicationController
   end
 
   def new
-    if @match = Match.create(players: [params[:user], current_user.id])
+    if opponent = params[:user]
+      @match = Match.create(players: [params[:user], current_user.id],
+                            status: Match.statuses[:game_ready])
       redirect_to @match
     else
-      redirect_to root_path
+      @match = Match.create(players: [current_user.id])
+      redirect_to matches_path
     end
   end
+
+  def join
+    @match.update(players: @match.players << current_user.id) if current_user
+    redirect_to matches_path
+  end
+
+  def start
+    @match.update(status: 1)
+    redirect_to @match
+  end
+
+  # def new
+  #   if @match = Match.create(players: [params[:user], current_user.id])
+  #     redirect_to @match
+  #   else
+  #     redirect_to root_path
+  #   end
+  # end
 
   def update
     if @match.whos_turn == current_user && @match.action(params[:move])
@@ -28,12 +51,14 @@ class MatchesController < ApplicationController
   end
 
   def refresh
-    if @match.whos_turn == current_user || @match.winner
+    ## commented out to support 3+ player mode
+    ## otherwise it only refresh when current_user's turn
+    # if @match.whos_turn == current_user || @match.winner
       match_info_updates!
       respond_to :js
-    else
-      render nothing: true
-    end
+    # else
+      # render nothing: true
+    # end
   end
 
   private
