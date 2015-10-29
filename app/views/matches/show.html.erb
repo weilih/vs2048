@@ -7,7 +7,7 @@
   <%= render partial: 'matches/board', locals: {board: @match.state} %>
 <% end %>
 
-<h1></h1>
+<%= content_tag :h1, @info, class: 'info' %>
 
 <% if @match.whos_turn == current_user.id  %>
   <button type="button" name="click" id='click'>click</button>
@@ -35,7 +35,7 @@
     setInterval(function(){
       if($('#click[disabled=disabled]').length > 0)
         $.ajax({ url: location.pathname + '/refresh', type: 'GET' })
-    }, 3000)
+    }, 1500)
   })
 
   $(document).keyup(function(e){

@@ -2,17 +2,7 @@ class Match < ActiveRecord::Base
   before_create :prepare_game
 
   def whos_turn
-    players[moves % players.size]
-  end
-
-  def result
-    if winner.nil?
-      nil
-    elsif winner.zero?
-      "Draw"
-    else
-      User.find_by(id: winner)
-    end
+    User.find_by(id: players[moves % players.size])
   end
 
   def action(action)

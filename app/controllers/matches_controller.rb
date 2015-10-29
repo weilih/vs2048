@@ -7,6 +7,7 @@ class MatchesController < ApplicationController
   end
 
   def show
+    match_info_updates!
   end
 
   def new
@@ -18,7 +19,8 @@ class MatchesController < ApplicationController
   end
 
   def update
-    if @match.whos_turn == current_user.id && @match.action(params[:move])
+    if @match.whos_turn == current_user && @match.action(params[:move])
+      match_info_updates!
       respond_to :js
     else
       render nothing: true
@@ -26,7 +28,8 @@ class MatchesController < ApplicationController
   end
 
   def refresh
-    if @match.whos_turn == current_user.id || @match.winner
+    if @match.whos_turn == current_user || @match.winner
+      match_info_updates!
       respond_to :js
     else
       render nothing: true
@@ -46,6 +49,14 @@ class MatchesController < ApplicationController
       return true
     else
       redirect_to matches_path and return
+    end
+  end
+
+  def match_info_updates!
+    if @match.winner
+      @info = winner.zero ? "DRAW" : "#{User.find(@match.winner)} WINS!"
+    else
+      @info = @match.whos_turn == current_user ? "Your turn" : "Waiting..."
     end
   end
 end

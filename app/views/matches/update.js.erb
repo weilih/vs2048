@@ -1,6 +1,5 @@
 $('div.match').html("<%= j render partial: 'matches/board', locals: {board: @match.state} %>")
+
 $('#click').attr('disabled', 'disabled')
 
-<% if @match.winner %>
-  $('h1').html('game end')
-<% end %>
+$('.info').html('<%= @info %>').css('color', 'red')
