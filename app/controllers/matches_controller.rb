@@ -23,6 +23,15 @@ class MatchesController < ApplicationController
     end
   end
 
+  def update
+    if @match.whos_turn == current_user && @match.action(params[:move])
+      match_info_updates!
+      respond_to :js
+    else
+      render nothing: true
+    end
+  end
+
   def join
     @match.update(players: @match.players << current_user.id) if current_user
     redirect_to matches_path
@@ -31,23 +40,6 @@ class MatchesController < ApplicationController
   def start
     @match.update(status: 1)
     redirect_to @match
-  end
-
-  # def new
-  #   if @match = Match.create(players: [params[:user], current_user.id])
-  #     redirect_to @match
-  #   else
-  #     redirect_to root_path
-  #   end
-  # end
-
-  def update
-    if @match.whos_turn == current_user && @match.action(params[:move])
-      match_info_updates!
-      respond_to :js
-    else
-      render nothing: true
-    end
   end
 
   def refresh
@@ -79,9 +71,17 @@ class MatchesController < ApplicationController
 
   def match_info_updates!
     if @match.winner
-      @info = @match.winner.zero? ? "DRAW" : "#{User.find(@match.winner)} WINS!"
+      if @match.winner.zero?
+        @info = { action: 'refresh', msg: "Draw"}
+      else
+        @info = { action: 'refresh', msg: "#{User.find(@match.winner)} Wins!"}
+      end
     else
-      @info = @match.whos_turn == current_user ? "Your turn" : "Waiting..."
+      if @match.whos_turn == current_user
+        @info = { action: 'pause', msg: "Your turn"}
+      else
+        @info = { action: 'refresh', msg: "Wait..."}
+      end
     end
   end
 end

@@ -11,16 +11,6 @@ class Match < ActiveRecord::Base
   end
 
   def action(direction)
-    # update(state: state << action)
-    # win_state = [[ nil,  nil,  nil,  nil],
-    #              [ nil,  nil,  nil,  nil],
-    #              [ nil,  nil,  nil,  nil],
-    #              [ nil, 1024, 1024,  nil]]
-    # lose_state = [[2,4,2,4],
-    #               [4,2,4,2],
-    #               [2,4,2,4],
-    #               [4,2,4,2]]
-
     @game_engine = GameEngine.new(state)
     stack_to(direction) unless winner
 

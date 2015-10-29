@@ -122,34 +122,3 @@ class GameEngine
     str.join("\n")
   end
 end
-
-# game = Wasd2048.new
-# game.show
-#
-# while true
-#
-#   input = gets.chomp
-#   case input.downcase[-1]
-#   when 'w'
-#     game.stack_to_top
-#   when 'a'
-#     game.stack_to_left
-#   when 's'
-#     game.stack_to_bottom
-#   when 'd'
-#     game.stack_to_right
-#   when 'q'
-#     break
-#   else
-#     puts 'W(up)-A(left)-S(down)-D(right)-Q(quit)'
-#   end
-#   game.show
-#
-#   if game.has_2048?
-#     puts 'YOU WIN'
-#     break
-#   elsif game.is_over?
-#     puts 'YOU LOSE'
-#     break
-#   end
-# end
