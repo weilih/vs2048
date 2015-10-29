@@ -32,11 +32,7 @@ class Match < ActiveRecord::Base
   private
 
   def prepare_game
-    win_state = [[ nil,  nil,  nil,  nil],
-                 [ nil,  nil,  nil,  nil],
-                 [ nil,  nil,  nil,  nil],
-                 [ nil, 1024, 1024,  nil]]
-    @game_engine = GameEngine.new(win_state)
+    @game_engine = GameEngine.new
     self.state = @game_engine.board
   end
 
