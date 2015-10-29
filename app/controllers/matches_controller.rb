@@ -54,7 +54,7 @@ class MatchesController < ApplicationController
 
   def match_info_updates!
     if @match.winner
-      @info = winner.zero ? "DRAW" : "#{User.find(@match.winner)} WINS!"
+      @info = @match.winner.zero? ? "DRAW" : "#{User.find(@match.winner)} WINS!"
     else
       @info = @match.whos_turn == current_user ? "Your turn" : "Waiting..."
     end

@@ -26,7 +26,7 @@ class GameEngine
       arr.replace push_aside(arr)
     end
 
-    @valid = new_num_popup?(@simulation)
+    new_num_popup?(@simulation)
     @board
   end
 
@@ -108,7 +108,7 @@ class GameEngine
       xy = rand(FOUR*FOUR).divmod(FOUR)
       break if @board[xy[0]][xy[1]].nil? && @board[xy[0]][xy[1]] = two_or_four
     end
-    true
+    @valid = true
   end
 
   def two_or_four
