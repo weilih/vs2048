@@ -1,7 +1,6 @@
 <meta http-equiv="refresh" content="10" />
-<%= render partial: 'sessions/links' %><br>
 
-<%= link_to :crete_new_room, new_match_path %><br>
+<%= link_to :create_new_room, new_match_path %><br>
 
 <% @users.online.each do |user| %>
   <%= user.username %>

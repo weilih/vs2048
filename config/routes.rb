@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     get 'start', on: :member
   end
 
+  get 'lobby' => 'matches#index'
+
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'

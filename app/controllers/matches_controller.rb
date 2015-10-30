@@ -5,7 +5,7 @@ class MatchesController < ApplicationController
   def index
     redirect_to root_path and return unless current_user
     current_user.online!
-    @users = User.exclude(current_user)
+    @users = User.exclude(current_user).order(:username)
     @new_matches = Match.new_game
   end
 

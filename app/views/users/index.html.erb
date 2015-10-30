@@ -1,8 +1,8 @@
 <meta http-equiv="refresh" content="60" />
-<%= render partial: 'sessions/links' %>
-<br>
 
-<% @users.online.each do |user| %>
+<%= link_to 'Go to Lobby', lobby_path if current_user %><br>
+
+<% @users.each do |user| %>
   <%= user.username %>
   <%= user.status %><br>
 <% end %>

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = User.exclude(current_user)
+    @users = User.exclude(current_user).order(:status, :username)
   end
 
   def new
