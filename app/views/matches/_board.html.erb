@@ -1,3 +1,8 @@
-<% board.in_ascii.each do |row| %>
-  <%= row %><br>
+<% board.state.each do |row| %>
+  <%= content_tag :div, class:'row board' do-%>
+    <%= content_tag :div, row[0], class:'col-xs-2 cell', val:row[0] %>
+    <%= content_tag :div, row[1], class:'col-xs-2 cell', val:row[1] %>
+    <%= content_tag :div, row[2], class:'col-xs-2 cell', val:row[2] %>
+    <%= content_tag :div, row[3], class:'col-xs-2 cell', val:row[3] %>
+  <% end %>
 <% end %>

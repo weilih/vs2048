@@ -1,3 +1,65 @@
 // Place all the styles related to the Matches controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.match {
+
+  div.board {
+    text-align: center;
+
+    div.cell {
+      font-weight: bold;
+      font-size: 20pt;
+      margin: 1px;
+      padding-top: 20px;
+      border-style: solid;
+      border-width: 1px;
+      width: 80px;
+      height: 80px;
+    }
+  }
+}
+
+div.cell[val|='2'] {
+    background: tomato;
+}
+
+div.cell[val|='4'] {
+    background: sandyBrown;
+}
+
+div.cell[val|='8'] {
+    background: yellow;
+}
+
+div.cell[val|='16'] {
+    background: aquamarine;
+}
+
+div.cell[val|='32'] {
+    background: lightBlue;
+}
+
+div.cell[val|='64'] {
+    background: aliceBlue;
+}
+
+div.cell[val|='128'] {
+    background: mediumPurple;
+}
+
+div.cell[val|='256'] {
+    background: bisque;
+}
+
+div.cell[val|='512'] {
+    background: lightSteelBlue;
+}
+
+div.cell[val|='1024'] {
+    background: chocolate;
+}
+
+div.cell[val|='2048'] {
+    background: gold;
+}
