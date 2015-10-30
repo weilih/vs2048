@@ -18,6 +18,7 @@ class MatchesController < ApplicationController
     if opponent = params[:user]
       @match = Match.create(players: [params[:user], current_user.id],
                             status: Match.statuses[:game_ready])
+      current_user.playing!
       redirect_to @match
     else
       @match = Match.create(players: [current_user.id])
@@ -27,6 +28,7 @@ class MatchesController < ApplicationController
 
   def update
     if @match.whos_turn == current_user && @match.action(params[:move])
+      @match.update(status: Match.statuses[:play_game])
       match_info_updates!
       respond_to :js
     else
@@ -34,7 +36,14 @@ class MatchesController < ApplicationController
     end
   end
 
+  def destroy
+    @match.update(status: Match.statuses[:game_end])
+    current_user.online!
+    redirect_to matches_path
+  end
+
   def join
+    current_user.playing!
     @match.update(players: @match.players << current_user.id) if current_user
     redirect_to matches_path
   end
@@ -73,9 +82,10 @@ class MatchesController < ApplicationController
 
   def match_info_updates!
     if @match.winner
+      @match.update(status: Match.statuses[:game_end])
       @info = game_over(@match.winner)
-    elsif !still_playing?(@match.players) && !@match.moves.zero?
-      @match.update(winner: 0)
+    elsif !still_playing?(@match.players) && !@match.game_ready?
+      @match.update(status: Match.statuses[:game_end])
       @info = { action: 'leave', msg: 'Your opponent ran away...'}
     else
       @info = wait_next_move(@match.whos_turn)

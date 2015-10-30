@@ -4,6 +4,10 @@ $('div.match')
 $('#info').html('<%= @info[:msg] %>')
           .attr('data-action', '<%= @info[:action]%>')
 
-<% if @match.winner || @info[:action] == 'leave' %>
+<% if @match.winner || @match.game_end? %>
   $('a#back').removeAttr('hidden')
+<% end %>
+
+<% if @match.play_game? %>
+ $('a#quit').attr('hidden', 'hidden')
 <% end %>

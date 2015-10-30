@@ -4,6 +4,7 @@
 
 <%= content_tag :h4, @info[:msg], id: 'info', 'data-action': @info[:action] %>
 
+<%= link_to :reject, @match, method: :delete, id:'quit' if @match.moves.zero? %>
 <%= link_to :back, matches_path, {id: 'back', hidden:'hidden'} %>
 
 <script type="text/javascript">
@@ -11,7 +12,7 @@
     setInterval(function(){
       if($('#info').attr('data-action') == 'refresh')
         $.ajax({ url: location.pathname + '/refresh', type: 'GET' })
-    }, 3000)
+    }, 1500)
   })
 
   $(document).keyup(function(e){
