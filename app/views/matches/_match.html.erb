@@ -1,0 +1,7 @@
+<%= link_to "Join", join_match_path(match) unless \
+      match.include?(current_user) %>
+
+<%= "Match##{match.id} with #{match.players_name.to_sentence}?" %>
+
+<%= link_to "Play!", start_match_path(match) if \
+      match.players.size >= 2 && match.include?(current_user) %>

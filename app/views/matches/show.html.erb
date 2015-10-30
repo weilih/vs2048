@@ -2,7 +2,7 @@
   <%= render partial: 'matches/board', locals: {board: @match} %>
 <% end %>
 
-<%= content_tag :h1, @info[:msg], id: 'info', 'data-action': @info[:action] %>
+<%= content_tag :h4, @info[:msg], id: 'info', 'data-action': @info[:action] %>
 
 <%= link_to :back, matches_path, {id: 'back', hidden:'hidden'} %>
 

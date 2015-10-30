@@ -1,8 +1,5 @@
 <meta http-equiv="refresh" content="60" />
 
-<%= link_to 'Go to Lobby', lobby_path if current_user %><br>
+<%= link_to 'Go to Lobby', matches_path if current_user %><br>
 
-<% @users.each do |user| %>
-  <%= user.username %>
-  <%= user.status %><br>
-<% end %>
+<%= render @users %>

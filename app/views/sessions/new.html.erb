@@ -1,5 +1,7 @@
-<%= form_for :session, url: login_path do |f| %>
-  <%= f.text_field :username %>
-  <%= f.password_field :password %>
-  <%= f.submit %>
-<% end %>
+<div class="text-center">
+  <%= form_for :session, url: login_path do |f| %>
+    <%= f.text_field :username, placeholder: "Username" %>
+    <%= f.password_field :password, placeholder: "Password" %>
+    <%= f.submit "Log in" %>
+  <% end %>
+</div>

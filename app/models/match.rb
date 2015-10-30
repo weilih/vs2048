@@ -24,6 +24,10 @@ class Match < ActiveRecord::Base
     end
   end
 
+  def players_name
+    User.where(id: players).pluck(:username)
+  end
+
   def in_ascii
     state.map do |row|
       row.map { |chr| "____#{chr}"[-4..-1] }.join('|')
